@@ -12,6 +12,7 @@ public class Produto {
 
     }
 
+
     public String getNome() {
         return nome;
     }
@@ -21,6 +22,7 @@ public class Produto {
     }
 
     public int getId() {
+
         return id;
     }
 
@@ -28,5 +30,13 @@ public class Produto {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
 
+        return "Produto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", descricao='" + descricao + '\'' +
+                '}';
+    }
 }

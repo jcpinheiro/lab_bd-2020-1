@@ -1,19 +1,14 @@
 package ifma.dcomp.lbd.aula_jdbc.dao;
 
+import com.mysql.jdbc.Connection;
+import ifma.dcomp.lbd.aula_jdbc.modelo.Categoria;
+import ifma.dcomp.lbd.aula_jdbc.modelo.Produto;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.mysql.jdbc.Connection;
-
-import ifma.dcomp.lbd.aula_jdbc.modelo.Categoria;
-import ifma.dcomp.lbd.aula_jdbc.modelo.Produto;
 
 public class CategoriasDAO {
 

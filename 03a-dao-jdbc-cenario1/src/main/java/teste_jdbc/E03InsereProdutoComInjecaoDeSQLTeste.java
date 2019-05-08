@@ -26,6 +26,8 @@ public class E03InsereProdutoComInjecaoDeSQLTeste {
 
 			String sql = "INSERT INTO produtos (nome, descricao) VALUES ('"+ nome + "', '" + descricao  + "')";
 
+            System.out.println("### " + sql);
+
             statement.execute(sql, Statement.RETURN_GENERATED_KEYS);
 
             ResultSet keys = statement.getGeneratedKeys();
@@ -44,20 +46,18 @@ public class E03InsereProdutoComInjecaoDeSQLTeste {
 
         String sql = "Insert INTO produtos (nome, descricao) VALUES (?, ?)";
 
-        try (PreparedStatement statement = connection
-                .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement pStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             String nome = "Computador Core i7";
             String descricao = "Computador Core i7 com 8 GB de RAM, tela 10'pol";
 
 
+            pStatement.setString(1, nome);
+            pStatement.setString(2, descricao);
 
-            statement.setString(1, nome);
-            statement.setString(2, descricao);
+            pStatement.execute();
 
-            statement.execute();
-
-            ResultSet keys = statement.getGeneratedKeys();
+            ResultSet keys = pStatement.getGeneratedKeys();
 
             if (keys.next()) {
                 System.out.println(keys.getInt(1));

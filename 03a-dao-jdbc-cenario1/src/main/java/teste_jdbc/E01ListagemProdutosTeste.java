@@ -14,13 +14,14 @@ public class E01ListagemProdutosTeste {
 
         ResultSet resultSet = statement.executeQuery("select * from produtos");
 
-        while (resultSet.next()) {
+        while (resultSet.next() ) {
             int id = resultSet.getInt("id");
             String nome = resultSet.getString("nome");
             String descricao = resultSet.getString("descricao");
 
 
             String registro = String.format("ID %d \t Nome: %s \tDescrição: %s", id, nome, descricao );
+
             System.out.println(registro);
         }
 

@@ -1,17 +1,18 @@
 package ifma.dcomp.lbd.aula_jdbc.dao;
 
+import ifma.dcomp.lbd.aula_jdbc.infra.ConnectionPool;
 import ifma.dcomp.lbd.aula_jdbc.modelo.Produto;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProdutoDAO {
+public class ProdutoDAO  {
 
     private Connection conexao;
 
-    public ProdutoDAO(Connection connection) {
-        this.conexao = connection;
+    public ProdutoDAO(Connection conexao)  {
+        this.conexao = conexao;
     }
 
     public Produto salva(Produto produto) throws SQLException {
@@ -35,16 +36,13 @@ public class ProdutoDAO {
 
     }
 
-    public List<Produto> recuperaProdutos() throws SQLException {
+    public List<Produto> getProdutos() throws SQLException {
 
-        String sql = "select * from produto";
+        String sql = "select * from produtos";
 
         try (PreparedStatement statment = conexao.prepareStatement(sql)) {
 			
-			/*stmt.execute();
-			ResultSet resultSet = stmt.getResultSet();*/
-
-            ResultSet resultSet = statment.executeQuery(sql);
+			ResultSet resultSet = statment.executeQuery(sql);
 
             final List<Produto> produtos = new ArrayList<>();
 
@@ -66,5 +64,6 @@ public class ProdutoDAO {
         p.setId(id);
         return p;
     }
+
 
 }

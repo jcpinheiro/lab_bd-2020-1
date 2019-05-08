@@ -13,6 +13,7 @@ public class E02InsereProdutoTeste {
             try (Statement statement = connection.createStatement()) {
 
                 String insert = "Insert INTO produtos (nome, descricao) VALUES ('Computador Core i9', 'Computador Core i7 com 8 GB de RAM')";
+
                 boolean resultado = statement.execute(insert, Statement.RETURN_GENERATED_KEYS);
 
                 ResultSet keys = statement.getGeneratedKeys();
@@ -23,6 +24,7 @@ public class E02InsereProdutoTeste {
 
 
             }
+
         }
 
     }
