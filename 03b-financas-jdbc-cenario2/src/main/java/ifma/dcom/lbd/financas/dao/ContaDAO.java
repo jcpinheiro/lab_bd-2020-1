@@ -69,6 +69,7 @@ public class ContaDAO {
 		}
 	}
 
+
 	public Conta procuraPelo(Integer id) {
 
 		try {
@@ -104,7 +105,7 @@ public class ContaDAO {
 
 			ResultSet rs = ps.executeQuery();
 
-			List<Conta> lista = new ArrayList<>();
+			final List<Conta> lista = new ArrayList<>();
 
 			while (rs.next()) {
 				Conta conta = new Conta();
@@ -112,11 +113,13 @@ public class ContaDAO {
 				conta.setBanco(rs.getString("banco"));
 				conta.setNumero(rs.getString("numero"));
 				conta.setAgencia(rs.getString("agencia"));
+
 				lista.add(conta);
 			}
 
 			ps.close();
 			return lista;
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

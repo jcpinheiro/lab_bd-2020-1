@@ -24,7 +24,8 @@ public class Categoria {
 	}
 
 	public void adiciona(Produto produto) {
-		produtos.add(produto);
+
+    	produtos.add(produto);
 	}
 	
 	public List<Produto> getProdutos() {

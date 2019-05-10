@@ -7,7 +7,8 @@ public class Produto {
 	private String descricao;
 	
 	private Categoria categoria;
-	
+
+
 	public Produto(String nome, String descricao) {
 		this.nome = nome;
 		this.descricao = descricao;

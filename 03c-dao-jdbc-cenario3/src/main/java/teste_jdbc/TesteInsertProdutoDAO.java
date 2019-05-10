@@ -1,21 +1,18 @@
 package teste_jdbc;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import ifma.dcomp.lbd.aula_jdbc.dao.ProdutoDAO;
-import ifma.dcomp.lbd.aula_jdbc.infra.ConnectionPool;
+import ifma.dcomp.lbd.aula_jdbc.infra.Database;
 import ifma.dcomp.lbd.aula_jdbc.modelo.Produto;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class TesteInsertProdutoDAO {
 
 	public static void main(String[] args) throws SQLException {
 		
 
-		try (Connection conexao = new ConnectionPool().getConexao() ) {
+		try (Connection conexao = Database.getConnection() ) {
 			
 			ProdutoDAO produtoDAO = new ProdutoDAO(conexao);
 

@@ -16,7 +16,7 @@ public class ConnectionPool {
 		
 		MysqlDataSource mysqlDataSource = new MysqlDataSource();
 		//String url = "jdbc:mysql://localhost/lojadb?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-		String url = "jdbc:mysql://localhost/loja?useSSL=false";
+		String url = "jdbc:mysql://localhost/estoque?useSSL=false";
 		
 		mysqlDataSource.setURL(url);
 		mysqlDataSource.setUser("root");
