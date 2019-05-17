@@ -4,17 +4,17 @@
   <artifactId>03-financas-jdbc</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Exemplo com JDBC</name>
-  
-  <properties>
+
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.16</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
@@ -22,9 +22,9 @@
             <version>1.4.199</version>
             <scope>test</scope>
         </dependency>
-	</dependencies>
+    </dependencies>
 
- 
+
     <build>
         <plugins>
             <plugin>
@@ -38,6 +38,6 @@
             </plugin>
         </plugins>
     </build>
-  
-  
+
+
 </project>

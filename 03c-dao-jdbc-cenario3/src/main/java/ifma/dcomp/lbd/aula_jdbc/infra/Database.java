@@ -17,9 +17,7 @@ public class Database {
 		if (conexao == null) {
 			try {
 				Properties propriedades = carregaPropriedades();
-
 				String url = propriedades.getProperty("dburl");
-
 				conexao = DriverManager.getConnection(url, propriedades);
 			}
 			catch (SQLException e) {
