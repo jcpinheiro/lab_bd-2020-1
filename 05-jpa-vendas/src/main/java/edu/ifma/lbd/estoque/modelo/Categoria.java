@@ -1,10 +1,7 @@
 package edu.ifma.lbd.estoque.modelo;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.*;
 
 @Entity
 public class Categoria {
@@ -14,6 +11,12 @@ public class Categoria {
 
     private String nome;
 
+    @ManyToOne
+    @JoinColumn(name = "categoria_pai", nullable = false)
+    private Categoria categoriaPai;
+
+    @OneToMany(mappedBy = "categoriaPai")
+    private Set<Categoria> subCategorias = new LinkedHashSet<>();
 
     public Integer getId() {
         return id;
@@ -29,6 +32,23 @@ public class Categoria {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+
+    public Categoria getCategoriaPai() {
+        return categoriaPai;
+    }
+
+    public void setCategoriaPai(Categoria categoriaPai) {
+        this.categoriaPai = categoriaPai;
+    }
+
+    public Set<Categoria> getSubCategorias() {
+        return subCategorias;
+    }
+
+    public void setSubCategorias(Set<Categoria> subCategorias) {
+        this.subCategorias = subCategorias;
     }
 
     @Override
