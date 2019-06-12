@@ -1,6 +1,5 @@
 package edu.ifma.lbd.estoque.modelo;
 
-
 import edu.ifma.lbd.estoque.modelo.enums.EstadoPedido;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "pedido")
-public class Pedido {
+public class Pedido implements EntidadeBase {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -48,6 +47,7 @@ public class Pedido {
         this.instanteCriacao = LocalDateTime.now();
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -85,9 +85,8 @@ public class Pedido {
     }
 
 
-    @Transient
-    public String getEstadoPedido() {
-        return estadoPedido.name();
+    public EstadoPedido getEstadoPedido() {
+        return estadoPedido;
     }
 
     public EstadoPedido finaliza() {
@@ -121,7 +120,22 @@ public class Pedido {
 
     @Transient
     public BigDecimal getTotal() {
-       return null;
 
-    }
+    // solução 01
+      /* BigDecimal total = BigDecimal.ZERO;
+       for(ItemPedido item: itens) {
+           total = total.add(item.getSubTotal() );
+       }
+       return total.add(frete).subtract(desconto);*/
+
+    // solução 02
+      /* return itens.stream()
+               .map(item -> item.getSubTotal())
+               .reduce(BigDecimal.ZERO, (x, y) -> x.add(y));*/
+
+    // solução 03
+       BigDecimal total = itens.stream().map(ItemPedido::getSubTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+       return total.add(frete)
+                    .subtract(desconto);
+  }
 }

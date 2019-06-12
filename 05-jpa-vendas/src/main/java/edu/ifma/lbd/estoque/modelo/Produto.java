@@ -7,12 +7,15 @@ import java.util.Set;
 
 
 @Entity
-public class Produto {
+public class Produto implements EntidadeBase {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nome;
+
+    @Column(unique = true)
+    private String sku;
 
     @Column(name = "preco_atual")
     private BigDecimal precoAtual;
@@ -28,7 +31,7 @@ public class Produto {
     )
     private Set<Categoria> categorias = new LinkedHashSet<>();
 
-
+    @Override
     public Integer getId() {
         return id;
     }
@@ -43,6 +46,14 @@ public class Produto {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public BigDecimal getPrecoAtual() {

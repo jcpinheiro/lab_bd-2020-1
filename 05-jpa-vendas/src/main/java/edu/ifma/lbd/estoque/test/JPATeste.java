@@ -1,5 +1,7 @@
-package edu.ifma.lbd.estoque.modelo;
+package edu.ifma.lbd.estoque.test;
 
+
+import edu.ifma.lbd.estoque.modelo.Produto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

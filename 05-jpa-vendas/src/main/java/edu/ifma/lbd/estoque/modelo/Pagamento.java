@@ -21,6 +21,7 @@ public abstract class Pagamento {
     @Column(name = "situacao")
     private SituacaoPagamento situacaoPagamento;
 
+
     public Pedido getPedido() {
         return pedido;
     }
@@ -40,13 +41,13 @@ public abstract class Pagamento {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Pagamento)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Pagamento pagamento = (Pagamento) o;
-        return Objects.equals(getId(), pagamento.getId());
+        return Objects.equals(pedido, pagamento.pedido);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(pedido);
     }
 }

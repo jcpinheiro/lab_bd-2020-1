@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Cliente {
+public class Cliente implements EntidadeBase {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -16,8 +16,8 @@ public class Cliente {
     @Column(nullable = false)
     private String nome;
 
-    @Column(name = "doc_receita")
-    private String docReceitaFederal;
+    @Column(unique = true)
+    private String cpf;
 
     @Enumerated(EnumType.STRING)
     private TipoCliente tipo;
@@ -31,7 +31,7 @@ public class Cliente {
     private Set<String> telefones = new LinkedHashSet<>();
 
 
-
+    @Override
     public Integer getId() {
         return id;
     }
@@ -48,12 +48,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getDocReceitaFederal() {
-        return docReceitaFederal;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setDocReceitaFederal(String docReceitaFederal) {
-        this.docReceitaFederal = docReceitaFederal;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public TipoCliente getTipo() {

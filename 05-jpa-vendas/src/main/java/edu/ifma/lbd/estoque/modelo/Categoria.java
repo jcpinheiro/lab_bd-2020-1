@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-public class Categoria {
+public class Categoria implements EntidadeBase {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -18,6 +18,7 @@ public class Categoria {
     @OneToMany(mappedBy = "categoriaPai")
     private Set<Categoria> subCategorias = new LinkedHashSet<>();
 
+    @Override
     public Integer getId() {
         return id;
     }

@@ -43,9 +43,10 @@ public class ItemPedido {
     }
 
     @Transient
-    private BigDecimal getSubTotal() {
+    public BigDecimal getSubTotal() {
         return valor
                .multiply(new BigDecimal(quantidade))
                .subtract(desconto );
     }
+
 }
