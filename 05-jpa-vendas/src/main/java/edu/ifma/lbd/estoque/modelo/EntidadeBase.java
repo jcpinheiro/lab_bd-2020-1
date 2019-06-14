@@ -1,6 +1,6 @@
 package edu.ifma.lbd.estoque.modelo;
 
 
-public interface EntidadeBase{
+public interface EntidadeBase {
    Integer getId();
 }

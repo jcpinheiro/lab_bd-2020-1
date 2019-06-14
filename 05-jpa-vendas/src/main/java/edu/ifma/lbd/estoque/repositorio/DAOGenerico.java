@@ -22,7 +22,6 @@ class DAOGenerico<T extends EntidadeBase> {
              this.manager.persist(t);
         else
             t = this.manager.merge(t);
-
         return t;
     }
 

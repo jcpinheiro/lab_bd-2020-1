@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class ItemPedido {
 
     @EmbeddedId
-    private ItemPedidoPK id;
+    private ItemPedidoPK id = new ItemPedidoPK();
 
     private BigDecimal valor;
     private BigDecimal desconto = BigDecimal.ZERO;
@@ -49,4 +49,11 @@ public class ItemPedido {
                .subtract(desconto );
     }
 
+    public void setPedido(Pedido pedido) {
+        id.setPedido(pedido);
+    }
+
+    public void setProduto(Produto produto) {
+        id.setProduto(produto);
+    }
 }

@@ -26,7 +26,7 @@ public class Pedido implements EntidadeBase {
     private String observacoes;
 
 
-    @OneToMany(mappedBy = "id.pedido")
+    @OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL)
     private Set<ItemPedido> itens = new LinkedHashSet<>();
 
     @Enumerated(EnumType.STRING)
@@ -34,7 +34,6 @@ public class Pedido implements EntidadeBase {
 
     @ManyToOne
     private Cliente cliente;
-
 
     @OneToOne(mappedBy = "pedido")
     private Pagamento pagamento;
@@ -72,7 +71,7 @@ public class Pedido implements EntidadeBase {
         return desconto;
     }
 
-    public void setDesconto(BigDecimal desconto) {
+    public void setDesconto(BigDecimal desconto ) {
         this.desconto = desconto;
     }
 
@@ -84,6 +83,37 @@ public class Pedido implements EntidadeBase {
         this.observacoes = observacoes;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
+
+    public EnderecoEntrega getEnderecoEntrega() {
+        return enderecoEntrega;
+    }
+
+    public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
+        this.enderecoEntrega = enderecoEntrega;
+    }
 
     public EstadoPedido getEstadoPedido() {
         return estadoPedido;
@@ -110,32 +140,28 @@ public class Pedido implements EntidadeBase {
         return Objects.hash(id);
     }
 
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
     @Transient
     public BigDecimal getTotal() {
-
     // solução 01
       /* BigDecimal total = BigDecimal.ZERO;
        for(ItemPedido item: itens) {
            total = total.add(item.getSubTotal() );
        }
        return total.add(frete).subtract(desconto);*/
-
     // solução 02
       /* return itens.stream()
                .map(item -> item.getSubTotal())
                .reduce(BigDecimal.ZERO, (x, y) -> x.add(y));*/
-
     // solução 03
-       BigDecimal total = itens.stream().map(ItemPedido::getSubTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
-       return total.add(frete)
-                    .subtract(desconto);
+       BigDecimal total = itens.stream()
+                               .map(ItemPedido::getSubTotal)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+       return total.add(frete).subtract(desconto);
   }
+
+
+    public void adiciona(ItemPedido item) {
+        itens.add(item );
+    }
 }

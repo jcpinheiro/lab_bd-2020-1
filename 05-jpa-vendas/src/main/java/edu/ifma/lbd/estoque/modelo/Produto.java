@@ -3,6 +3,7 @@ package edu.ifma.lbd.estoque.modelo;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -12,6 +13,7 @@ public class Produto implements EntidadeBase {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
     private String nome;
 
     @Column(unique = true)
@@ -27,8 +29,7 @@ public class Produto implements EntidadeBase {
     @JoinTable(
         name = "produto_categoria",
         joinColumns = @JoinColumn(name = "produto_id"),
-        inverseJoinColumns = @JoinColumn(name = "categoria_id")
-    )
+        inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private Set<Categoria> categorias = new LinkedHashSet<>();
 
     @Override
@@ -80,5 +81,31 @@ public class Produto implements EntidadeBase {
         this.categorias = categorias;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Produto produto = (Produto) o;
+        return Objects.equals(id, produto.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", sku='" + sku + '\'' +
+                ", precoAtual=" + precoAtual +
+                ", quantidaEstoque=" + quantidaEstoque +
+                ", categorias=" + categorias +
+                '}';
+    }
 }
+
+

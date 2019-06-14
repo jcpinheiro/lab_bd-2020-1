@@ -84,4 +84,8 @@ public class Cliente implements EntidadeBase {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public void adiciona(Endereco endereco) {
+        enderecos.add(endereco );
+    }
 }

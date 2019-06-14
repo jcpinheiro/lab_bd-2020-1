@@ -37,15 +37,18 @@ public class PedidoRepository {
 
     public List<Pedido> comPagamentoCartao() {
         return manager
-                .createQuery("Select p From Pedido p where TYPE(p.pagamento) IN (:tipoPagamento)",
+                .createQuery("Select p From Pedido p join p.pagamento pg where TYPE(pg) = PagamentoCartao",
                         Pedido.class)
-                .setParameter("tipoPagamento", Arrays.asList(PagamentoCartao.class) )
                 .getResultList();
     }
+
+
 
     public List<Pedido> comPagamentoBoleto() {
         return comPagametosDoTipo(PagamentoBoleto.class );
     }
+
+
 
     private List<Pedido> comPagametosDoTipo(Class<PagamentoBoleto> clazz) {
         return manager

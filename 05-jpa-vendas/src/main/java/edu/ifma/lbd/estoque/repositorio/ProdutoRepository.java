@@ -6,6 +6,7 @@ import edu.ifma.lbd.estoque.modelo.Produto;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 public class ProdutoRepository {
 
@@ -25,10 +26,11 @@ public class ProdutoRepository {
 
     public Produto buscaPorSku(String sku) {
         try {
-            return manager.createQuery("from Produto where upper(sku) = :sku",
-                                        Produto.class)
+            Produto produto = manager.createQuery("from Produto where upper(sku) = :sku",
+                    Produto.class)
                     .setParameter("sku", sku.toUpperCase())
                     .getSingleResult();
+            return produto;
 
         } catch (NoResultException e) {
             return null;
