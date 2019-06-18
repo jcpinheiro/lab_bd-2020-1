@@ -35,7 +35,7 @@ public class Pedido implements EntidadeBase {
     @ManyToOne
     private Cliente cliente;
 
-    @OneToOne(mappedBy = "pedido")
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     @Embedded
@@ -119,12 +119,12 @@ public class Pedido implements EntidadeBase {
         return estadoPedido;
     }
 
-    public EstadoPedido finaliza() {
-        return estadoPedido.finaliza();
+    public void finaliza() {
+        this.estadoPedido = estadoPedido.finaliza();
     }
 
-    public EstadoPedido cancela() {
-        return estadoPedido.cancela();
+    public void cancela() {
+        this.estadoPedido = estadoPedido.cancela();
     }
 
     @Override
@@ -155,13 +155,19 @@ public class Pedido implements EntidadeBase {
     // solução 03
        BigDecimal total = itens.stream()
                                .map(ItemPedido::getSubTotal)
-                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                               .reduce(BigDecimal.ZERO, BigDecimal::add);
 
        return total.add(frete).subtract(desconto);
-  }
+    }
 
 
     public void adiciona(ItemPedido item) {
-        itens.add(item );
+
+        if (!itens.contains(item) ) {
+            itens.add(item );
+
+        } else {
+            item.aumentaQuantidade(item.getQuantidade() );
+        }
     }
 }

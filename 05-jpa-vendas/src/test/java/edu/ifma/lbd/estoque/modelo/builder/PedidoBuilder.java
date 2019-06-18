@@ -15,11 +15,15 @@ public class PedidoBuilder {
 
     public static PedidoBuilder umPedido() {
         PedidoBuilder builder = new PedidoBuilder();
-
         builder.pedido = new Pedido();
         builder.pedido.setEnderecoEntrega(defineEnderecoPadrao() );
 
         return builder;
+    }
+
+    public PedidoBuilder deID(int id) {
+        pedido.setId(id );
+        return this;
     }
 
     public PedidoBuilder doCliente(Cliente cliente) {
@@ -75,6 +79,4 @@ public class PedidoBuilder {
 
         return enderecoEntrega;
     }
-
-
 }

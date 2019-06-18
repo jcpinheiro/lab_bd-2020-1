@@ -1,16 +1,24 @@
 package edu.ifma.lbd.estoque.repositorio;
 
 import edu.ifma.lbd.estoque.modelo.Cliente;
+import edu.ifma.lbd.estoque.modelo.ItemPedido;
 import edu.ifma.lbd.estoque.modelo.Pedido;
+import edu.ifma.lbd.estoque.modelo.Produto;
 import edu.ifma.lbd.estoque.modelo.builder.ClienteBuilder;
+import edu.ifma.lbd.estoque.modelo.builder.ItemPedidoBuilder;
 import edu.ifma.lbd.estoque.modelo.builder.PedidoBuilder;
+import edu.ifma.lbd.estoque.modelo.builder.ProdutoBuilder;
 import org.junit.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class PedidoRepositoryTest {
 	
@@ -49,13 +57,39 @@ public class PedidoRepositoryTest {
 	@Test
 	public void testSalva() { 	}
 
+
 	@Test
-	public void testBuscaPedidosEmAtraso() {  	}
+	public void deveCalcularTotalSemDescontoEFrete() {
+
+		Cliente joao = ClienteBuilder.umCliente().comNome("Joao da Silva").constroi();
+		ClienteRepository clienteRepository = new ClienteRepository(manager );
+		clienteRepository.salvaOuAtualiza(joao );
+
+		Pedido pedido = PedidoBuilder.umPedido().doCliente(joao).constroi();
+		pedidoRepository.salvaOuAtualiza(pedido );
+
+		Produto produto1 = ProdutoBuilder.umProduto().comNome("Prod01").sku("ab1234").preco(new BigDecimal(9.99)).constroi();
+		Produto produto2 = ProdutoBuilder.umProduto().comNome("Prod02").sku("ac4321").preco(new BigDecimal(5.49)).constroi();
+
+		ProdutoRepository produtoRepository = new ProdutoRepository(manager );
+		produtoRepository.salvaOuAtualiza(produto1 );
+		produtoRepository.salvaOuAtualiza(produto2 );
+
+		ItemPedido item01 = ItemPedidoBuilder.umItem().noPedido(pedido).doProduto(produto1).constroi();
+		ItemPedido item02 = ItemPedidoBuilder.umItem().noPedido(pedido).doProduto(produto2).constroi();
+
+		pedido.adiciona(item01 );
+		pedido.adiciona(item02 );
+
+		pedidoRepository.salvaOuAtualiza(pedido );
+
+		assertThat(pedido.getItens().size(), equalTo(2));
+		assertEquals(new BigDecimal(15.48).doubleValue(), pedido.getTotal().doubleValue(), 0.00001 );
+	}
 
 
 	@Test
     public void deveTrazerSomentePedidosFinalizados() {
-
 		ClienteRepository clienteRepository = new ClienteRepository(this.manager);
 
 		Cliente joao = ClienteBuilder.umCliente().comNome("Joao da Silva").constroi();
@@ -76,14 +110,14 @@ public class PedidoRepositoryTest {
 		pedidoRepository.salvaOuAtualiza(finalizado2 );
 
 		// chamando o método para testar
-        List<Pedido> finalizados = pedidoRepository.finalizados();
+        List<Pedido> pedidosFinalizados = pedidoRepository.finalizados();
 
         // garantindo que a query funcionou
-        Assert.assertEquals(2, finalizados.size());
+        Assert.assertEquals(2, pedidosFinalizados.size());
 
         //verificação
-        Assert.assertEquals("Joao da Silva", finalizados.get(0).getCliente().getNome() );
-		Assert.assertEquals("José da Silva", finalizados.get(1).getCliente().getNome() );
+        Assert.assertEquals("Joao da Silva", pedidosFinalizados.get(0).getCliente().getNome() );
+		Assert.assertEquals("José da Silva", pedidosFinalizados.get(1).getCliente().getNome() );
     }
 	
 	

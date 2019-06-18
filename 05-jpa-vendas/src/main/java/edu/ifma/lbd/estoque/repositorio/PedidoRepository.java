@@ -17,7 +17,7 @@ public class PedidoRepository {
 
     public PedidoRepository(EntityManager manager) {
         this.manager = manager;
-        this.daoGenerico = new DAOGenerico<>(manager);
+        this.daoGenerico = new DAOGenerico<Pedido>(manager);
     }
 
     public Pedido porId(Integer id) {

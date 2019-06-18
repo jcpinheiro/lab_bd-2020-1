@@ -17,7 +17,7 @@ public class TesteProduto {
 		Produto produto = new Produto();
 		produto.setNome("Caderno de 10 materias");
 		produto.setPrecoAtual(new BigDecimal(12.91) );
-		produto.setQuantidaEstoque(100 );
+		produto.adicionaNoEstoque(100 );
 
 		EntityManagerFactory factory =
 				Persistence.createEntityManagerFactory("lab05_jpa-test");

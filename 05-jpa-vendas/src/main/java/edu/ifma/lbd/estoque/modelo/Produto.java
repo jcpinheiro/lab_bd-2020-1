@@ -10,7 +10,8 @@ import java.util.Set;
 @Entity
 public class Produto implements EntidadeBase {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true)
@@ -23,13 +24,13 @@ public class Produto implements EntidadeBase {
     private BigDecimal precoAtual;
 
     @Column(name = "quantidade_estoque")
-    private Integer quantidaEstoque;
+    private Integer quantidaEstoque = 0;
 
     @ManyToMany
     @JoinTable(
-        name = "produto_categoria",
-        joinColumns = @JoinColumn(name = "produto_id"),
-        inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+            name = "produto_categoria",
+            joinColumns = @JoinColumn(name = "produto_id"),
+            inverseJoinColumns = @JoinColumn(name = "categoria_id"))
     private Set<Categoria> categorias = new LinkedHashSet<>();
 
     @Override
@@ -69,9 +70,11 @@ public class Produto implements EntidadeBase {
         return quantidaEstoque;
     }
 
+/*
     public void setQuantidaEstoque(Integer quantidaEstoque) {
         this.quantidaEstoque = quantidaEstoque;
     }
+*/
 
     public Set<Categoria> getCategorias() {
         return categorias;
@@ -80,6 +83,29 @@ public class Produto implements EntidadeBase {
     public void setCategorias(Set<Categoria> categorias) {
         this.categorias = categorias;
     }
+
+
+    /* Foi adicionado os métodos para manipular a quantidade em estoque */
+
+    public void adicionaNoEstoque(Integer quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser um Valor Positivo");
+        }
+        this.quantidaEstoque = this.getQuantidaEstoque() + quantidade;
+    }
+
+
+    public void baixaNoEstoque(Integer quantidade) {
+        Integer novaQuantidade = this.getQuantidaEstoque() - quantidade;
+
+        if (novaQuantidade < 0) {
+            throw new IllegalArgumentException("Não há disponibilidade no estoque de "
+                    + quantidade + " itens do produto " + this.getSku() + ".");
+        }
+
+        this.quantidaEstoque = novaQuantidade;
+    }
+
 
     @Override
     public boolean equals(Object o) {
