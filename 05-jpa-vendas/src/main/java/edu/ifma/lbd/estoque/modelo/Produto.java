@@ -96,6 +96,10 @@ public class Produto implements EntidadeBase {
 
 
     public void baixaNoEstoque(Integer quantidade) {
+
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade deve ser um Valor Positivo");
+        }
         Integer novaQuantidade = this.getQuantidaEstoque() - quantidade;
 
         if (novaQuantidade < 0) {

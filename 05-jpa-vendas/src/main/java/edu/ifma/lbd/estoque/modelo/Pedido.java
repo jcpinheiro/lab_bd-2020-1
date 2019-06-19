@@ -163,11 +163,15 @@ public class Pedido implements EntidadeBase {
 
     public void adiciona(ItemPedido item) {
 
-        if (!itens.contains(item) ) {
+        if (aindaNaoPossuiO(item)) {
             itens.add(item );
 
         } else {
             item.aumentaQuantidade(item.getQuantidade() );
         }
+    }
+
+    private boolean aindaNaoPossuiO(ItemPedido item) {
+        return !itens.contains(item);
     }
 }

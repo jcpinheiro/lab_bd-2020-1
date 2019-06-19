@@ -36,11 +36,11 @@ public class PedidoRepositoryTest {
 	@Before
 	public void antes() {
 		manager = emf.createEntityManager();
-		manager.getTransaction().begin();
-		
+
 		pedidoRepository = new PedidoRepository(manager );
 		clienteRepository = new ClienteRepository(manager );
-		
+
+		manager.getTransaction().begin();
 	}
 	
 	@After

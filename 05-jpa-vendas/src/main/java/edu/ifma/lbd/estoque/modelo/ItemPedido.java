@@ -56,6 +56,10 @@ public class ItemPedido {
         id.setProduto(produto);
     }
 
+    public Produto getProduto() {
+        return id.getProduto();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,5 +75,13 @@ public class ItemPedido {
 
     public void aumentaQuantidade(Integer qtd) {
         this.quantidade = this.quantidade + qtd;
+    }
+
+    public void baixarEstoque(Integer quantidade) {
+        this.getProduto().baixaNoEstoque(quantidade );
+    }
+
+    public void adicionarEstoque(Integer quantidade) {
+        this.getProduto().adicionaNoEstoque(quantidade );
     }
 }
